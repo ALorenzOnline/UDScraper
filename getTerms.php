@@ -10,7 +10,7 @@
 */
 try{
 	
-
+        include 'storeTerms.php';
 	$url="http://www.urbandictionary.com/?page=2";
 	$output=file_get_contents($url);
 	$file="tempStorage.txt";
@@ -34,6 +34,7 @@ try{
 	$tWord="";
 	$breaker="";
 	$count=0;
+	$finalTerm="";
 	foreach($matches as $word)
 	{
 		
@@ -59,27 +60,32 @@ try{
 				}
 			//echo $tWord;
 			//cleans up the word for storage by replacing a space with a '+'
-			//Also removes ><
-			$finalTerm="";			
+			//Also removes ><			
 						
-			for($k=0;$k<strlen($tWord);$k++)
+			
+			
+		}
+		for($k=0;$k<strlen($tWord);$k++)
 			{
 				if($tWord[$k]!='<' && $tWord[$k]!='>' )
 				{
 					$finalTerm=$finalTerm.$tWord[$k];	
 				}						
 			}
+			
 			$finalTerm=preg_replace('/\s+/','+',$finalTerm);
-			echo $finalTerm;			
-			//return $finalTerm;			
+			if($finalTerm != null)
+			{			
+				storeTerm($finalTerm);			
+				//echo $finalTerm;
+				//echo"\r\n";
+			}		
 			$tWord="";
 		        $count=0;
 		        $breaker="";
 			$finalTerm="";
 			file_put_contents($file,"");
 			}
-			
-		}
 	
 	}
 }catch(ErrorException $e){
