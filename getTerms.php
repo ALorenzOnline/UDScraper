@@ -10,8 +10,9 @@
 */
 try{
 	
-        include 'storeTerms.php';
-	$url="http://www.urbandictionary.com/?page=2";
+        require_once 'storeTerms.php';
+	include	'getDef.php';
+	$url="http://www.urbandictionary.com/?page=10";
 	$output=file_get_contents($url);
 	$file="tempStorage.txt";
 	file_put_contents($file,$output,FILE_APPEND);
@@ -35,6 +36,7 @@ try{
 	$breaker="";
 	$count=0;
 	$finalTerm="";
+	$def="";
 	foreach($matches as $word)
 	{
 		
@@ -75,14 +77,18 @@ try{
 			
 			$finalTerm=preg_replace('/\s+/','+',$finalTerm);
 			if($finalTerm != null)
-			{			
-				storeTerm($finalTerm);			
+			{	
+				$def=getDef($finalTerm);
+				echo $finalTerm;				
+				echo $def;
+				storeTerm($finalTerm,$def);			
 				//echo $finalTerm;
 				//echo"\r\n";
 			}		
 			$tWord="";
 		        $count=0;
 		        $breaker="";
+			$def="";
 			$finalTerm="";
 			file_put_contents($file,"");
 			}
