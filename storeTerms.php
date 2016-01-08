@@ -1,11 +1,11 @@
 <?php
 
-//include "databaseConnect.php";
+
 
 
 try
 {	
-
+	
 	/*
 	@@This function will take a term from getTerms.php
 	@@ then conntct to the urbanStorage Database. Then
@@ -13,10 +13,12 @@ try
 	*/
 	function storeTerm($term,$def)
 	{
-		$database=mysqli_connect("localhost","root","password","urbanStorage") or die("could not connect");
+		include "databaseConnect.php";
+		$date=date("m-d-y");
+		$database=$db;
 		//echo $term;
 		//echo "\r\n";	
-		$store="INSERT INTO stores (term,def,lastUpdated) VALUES ('$term','$def','today');";
+		$store="INSERT INTO stores (term,def,lastUpdated) VALUES ('$term','$def','$date');";
 		mysqli_query($database,$store);
 		
 

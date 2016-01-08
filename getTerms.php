@@ -12,7 +12,8 @@ try{
 	
         require_once 'storeTerms.php';
 	include	'getDef.php';
-	$url="http://www.urbandictionary.com/?page=10";
+	require_once 'databaseConnect.php';
+	$url="http://www.urbandictionary.com/?page=30";
 	$output=file_get_contents($url);
 	$file="tempStorage.txt";
 	file_put_contents($file,$output,FILE_APPEND);
@@ -78,12 +79,27 @@ try{
 			$finalTerm=preg_replace('/\s+/','+',$finalTerm);
 			if($finalTerm != null)
 			{	
-				$def=getDef($finalTerm);
-				echo $finalTerm;				
-				echo $def;
-				storeTerm($finalTerm,$def);			
-				//echo $finalTerm;
-				//echo"\r\n";
+				
+				
+				/*
+				@@Checks the tables to see if the word is in the table
+				@@if its not then the table will add the new term
+				*/
+				$database=$db;
+				$termToCheck="select * from stores where term = '$finalTerm';";
+				$checkDB=mysqli_query($database,$termToCheck);
+				//$result = mysqli_free_result($fetchResult);
+				$num=mysqli_num_rows($checkDB);
+				
+				if($num<1)
+				{
+					$def=getDef($finalTerm);					
+					echo $finalTerm;				
+					echo $def;
+					storeTerm($finalTerm,$def);			
+					//echo $finalTerm;
+					//echo"\r\n";
+				}
 			}		
 			$tWord="";
 		        $count=0;
