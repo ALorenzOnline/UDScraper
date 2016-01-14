@@ -3,7 +3,7 @@
 try
 {
 include "databaseConnect.php";
-//include "getTerms.php";
+include "getTerms.php";
 
 $date=date("m-d-y");
 $database=$db;
@@ -30,8 +30,19 @@ for($i=0;$i<$numrows;$i++)
 
 }
 
+/*
+@@This Part of the code will check to see how many entries 
+@@are in a table. As long as it is less than 10,000 it will
+@@keep populating the table.
+*/
+$numrows = mysqli_num_rows(mysqli_query($database,'select * from stores'));
 
-
+//for($i=0;$i<100;$i++)
+//{
+	$randomInt=rand(1, 500 );
+	addTerms($randomInt);
+	$numrows = mysqli_num_rows(mysqli_query($database,'select * from stores'));	
+//}
 }
 catch(exceptionError $e)
 {

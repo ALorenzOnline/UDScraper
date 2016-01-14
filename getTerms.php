@@ -9,11 +9,12 @@
 @@This can also be altered to be used with other pages on UD
 */
 try{
-	
+function addTerms($pageNumber)
+{ 			
         require_once 'storeTerms.php';
 	include	'getDef.php';
 	require_once 'databaseConnect.php';
-	$url="http://www.urbandictionary.com/?page=30";
+	$url="http://www.urbandictionary.com/?page=$pageNumber";
 	$output=file_get_contents($url);
 	$file="tempStorage.txt";
 	file_put_contents($file,$output,FILE_APPEND);
@@ -93,9 +94,9 @@ try{
 				
 				if($num<1)
 				{
-					$def=getDef($finalTerm);					
-					echo $finalTerm;				
-					echo $def;
+					$def=storeDef($finalTerm);					
+					//echo $finalTerm;				
+					//echo $def;
 					storeTerm($finalTerm,$def);			
 					//echo $finalTerm;
 					//echo"\r\n";
@@ -104,12 +105,13 @@ try{
 			$tWord="";
 		        $count=0;
 		        $breaker="";
-			$def="";
+			//$def="";
 			$finalTerm="";
 			file_put_contents($file,"");
 			}
 	
 	}
+}
 }catch(ErrorException $e){
 	echo $e->getMessage();
 }

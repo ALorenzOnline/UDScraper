@@ -2,7 +2,7 @@
 try{
 	
 	
-	function getDef($term)
+	function storeDef($term)
 	{
         	//include 'storeTerms.php';
 		$url="http://www.urbandictionary.com/define.php?term=$term";
@@ -31,7 +31,7 @@ try{
 		$string=preg_replace('(\&quot;)','"',$string);
 		$string=preg_replace('(\&#39;)',"'",$string);
 		file_put_contents($file,"");		
-		return $string;
+		//return $string;
 		
 	
 	}
